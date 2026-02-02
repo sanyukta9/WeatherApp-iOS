@@ -4,7 +4,7 @@
 //
 //  Created by Sanyukta Adhate on 01/02/26.
 //
-//`Codable` is a type alias for the `Encodable` and `Decodable` protocols.
+//`Codable` is a type alias for the `Encodable` and `Decodable` protocols. Must same as JSON
 
 struct WeatherData: Codable {
     let weather: [Weather]

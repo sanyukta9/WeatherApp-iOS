@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 
+//1> If you use me, you MUST handle these callbacks.
 protocol WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
     func didFailWithError(error: Error)
@@ -16,16 +17,17 @@ protocol WeatherManagerDelegate {
 struct WeatherManager {
     let baseURL = "https://api.openweathermap.org/data/2.5/weather?&appid=b83132a4d79477145379d3f4c36a8148&units=metric"
     
+    //2> Delegate property - idk who calling but whoever it is must follow rules, ? unassigned yet.
     var delegate: WeatherManagerDelegate?
     
     //method overloading
-    //using city name
+    //Fetch by city
     func fetchWeather(cityName: String){
         let urlString = "\(baseURL)&q=\(cityName)"
         print(urlString)
         handleRequest(urlString)
     }
-    //using latitude, longitude
+    //Fetch by location - latitude, longitude
     func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let urlString = "\(baseURL)&lat=\(latitude)&lon=\(longitude)"
         print(urlString)
@@ -38,7 +40,7 @@ struct WeatherManager {
         if let url = URL(string: urlString) {
                 //2. Create a URL session
             let session = URLSession(configuration: .default)
-                //3. Give URL session a task
+                //3. Give URL session a task - Internet call. Turns raw JSON → structs
             let task = session.dataTask(with: url) { (data, response, error) in
                 if (error != nil){
                     self.delegate?.didFailWithError(error: error!)
@@ -51,6 +53,7 @@ struct WeatherManager {
 //                        self.parseJSONData(weatherData: safeData)
 //                    }
                     if let parsedWeather = self.parseJSONData(safeData) {
+                        //5> Delegate call
                         self.delegate?.didUpdateWeather(self, weather: parsedWeather)
                     }
                 }

@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var conditionWeather: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
-    //when click on go button
+    //when click on nav-search button
     @IBAction func searchPressed(_ sender: UIButton) {
         searchField.endEditing(true)
         print(searchField.text!)
@@ -38,13 +38,13 @@ class ViewController: UIViewController {
     
     //MARK: - Setup
 extension ViewController {
-    //set as delegate
+    //3> Hey X, when something happens, CALL ME.
     func setupDelegates() {
         searchField.delegate = self
         weatherManager.delegate = self
         locationManager.delegate = self
     }
-    //A screen prompt requests the user’s permission to grant live location access
+    //location permission: Allow location while using app?
     func setupLocation() {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
@@ -53,8 +53,9 @@ extension ViewController {
     
     //MARK: - UITextFieldDelegate
 
-    //when click on search button, it will print the location
+//4> Conform to protocol. Promise that i know how to handle and what to follow - forces to implement rules
 extension ViewController: UITextFieldDelegate {
+        //controls keyboard behavior. Pressing return/go = dismiss keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchField.endEditing(true)
         print(searchField.text!)
@@ -62,8 +63,7 @@ extension ViewController: UITextFieldDelegate {
         
     }
     
-        //clear the search field once done typed n searching
-        //pass on the city name the openWeather api, fetch the url which returns response
+        //User Finished Typing. This is where API call starts.
     func textFieldDidEndEditing(_ textField: UITextField) {
         let city = searchField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         if !city.isEmpty {
@@ -86,6 +86,7 @@ extension ViewController: UITextFieldDelegate {
 
     //MARK: - WeatherManagerDelegate
 
+//NETWORK LAYER - never touches UI
 extension ViewController: WeatherManagerDelegate{
     func didUpdateWeather(_ weatherManager: WeatherManager ,weather: WeatherModel){
             //long running tasks such as networking are executed in background, wont update UI from a completion handler. Dispatch the call to update the label text to the main thread.

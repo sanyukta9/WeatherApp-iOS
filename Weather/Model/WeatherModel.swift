@@ -4,6 +4,7 @@
 //
 //  Created by Sanyukta Adhate on 01/02/26.
 //
+//This is what UI actually uses.
 
 import Foundation
 struct WeatherModel {
