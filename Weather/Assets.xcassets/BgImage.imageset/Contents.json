@@ -1,7 +1,8 @@
 {
-  "colors" : [
+  "images" : [
     {
-      "idiom" : "iphone"
+      "filename" : "background.png",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -10,7 +11,8 @@
           "value" : "light"
         }
       ],
-      "idiom" : "iphone"
+      "filename" : "background 1.png",
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -19,11 +21,15 @@
           "value" : "dark"
         }
       ],
-      "idiom" : "iphone"
+      "filename" : "dark_background.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }
